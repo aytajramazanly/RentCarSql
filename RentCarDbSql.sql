@@ -72,7 +72,7 @@
 --Color nvarchar(20),
 --PlateNumber nvarchar(50) not null,
 --Km int not null,
---Engine  nvarchar(15)
+--Engine  decimal(2,1)
 --)
 
 --create table RentalExtraServices(
@@ -223,4 +223,68 @@
 
 --select * from v_GetHandoverInfo
 --where TotalAmount>Paid
+
+
+--create procedure InfoByAge @Age int
+--as
+--select * from Customers
+--where Age>@Age
+
+--create procedure GetCarsByEngine @Engine decimal
+--as
+--select * from CarDetails
+--where Engine=@Engine
+
+--create function GetPaymentById (@RentalId int)
+--returns decimal
+--as 
+--begin
+--declare @TotalPayment decimal
+--select @TotalPayment=sum(Amount) from Payments
+--where @RentalId=RentalId
+--return @TotalPayment
+--end
+
+--select dbo.GetPaymentById(2)
+
+--create function GetAvgAgeByAge (@Age int)
+--returns int
+--as
+--begin
+--declare @AvgAge int
+--select @AvgAge=Avg(Age) from Customers 
+--where Age>@Age
+--return @AvgAge
+--end
+
+--select dbo.GetAvgAgeByAge(22)
+
+--create trigger SoftDelete on Customers
+--instead of Delete
+--as
+--begin
+--update Customers set IsDeleted=1
+--where Id in (select Id from deleted)
+--end
+
+--delete from Customers
+--where Id=3
+
+--create trigger SoftDeleteCars on Cars
+--instead of Delete
+--as 
+--begin
+--update Cars set IsDeleted=1
+--where Id in (select Id from deleted)
+--end
+
+--create trigger SelectAllAfterInsertRental on RentOrders
+--after insert
+--as
+--begin
+--select * from RentOrders
+--end
+
+--insert into RentOrders values
+--(3,50,1)
 
